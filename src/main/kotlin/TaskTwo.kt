@@ -19,16 +19,18 @@ fun main(){
 
 /** Задание 2 - "Люди/Человеки" */
 
-    val likes = 61
+    val likes = 3211
     var lastDigitOfLikes = 0
-    val likesLength = likes.toString().length.toInt()-1
-    if (likes>1) lastDigitOfLikes = likes%(10*likesLength)
+    //val likesLength = likes.toString().length.toInt()-1
+    if (likes>1) lastDigitOfLikes = likes%10
     val digits:Array<Int> = arrayOf(2,3,4,5,6,7,8,9,0)
+    val lastTwoDigits = likes%100
 
     println("""
 Задание 2 - "Люди/Человеки" """)
 
-    if(likes==0) println("Запись оценило 0 человек")
+    if (lastTwoDigits==11) println("Понравилось $likes людям")
+    else if(likes==0) println("Запись оценило 0 человек")
     else if (likes==1) println("Понравилось $likes человеку")
     else if(lastDigitOfLikes==1) println("Понравилось $likes человеку")
     else if(lastDigitOfLikes in digits) println("Понравилось $likes людям")
