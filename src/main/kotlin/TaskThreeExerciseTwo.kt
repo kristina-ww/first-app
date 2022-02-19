@@ -13,68 +13,53 @@ const val commissionForVISAandMIR = 0.75
 const val minCommissionForVISAandMIR = 35 //RUB
 
 fun main(){
-    val cards = arrayOf(MAESTRO,MASTERCARD,VISA,MIR)
-
-    val typeOfCardOrAccount = MAESTRO
+    val typeOfCardOrAccount = MASTERCARD
     val amountOfPreviousTransfersThisMonth = 111
     val amountOfTheTransfer = 11131
+
+    finalAnswer(amountOfPreviousTransfersThisMonth, amountOfTheTransfer, typeOfCardOrAccount)
+}
+
+fun finalAnswer(amountOfPreviousTransfersThisMonth:Int,amountOfTheTransfer: Int, typeOfCardOrAccount: String){
     var commission = 0
     var commissionRUB = 0
     var commissionPenny = 0
 
     when(transferLimitCheck(typeOfCardOrAccount,amountOfPreviousTransfersThisMonth,amountOfTheTransfer)) {
         true -> {commission = cardCommission(typeOfCardOrAccount,amountOfTheTransfer)
-        commissionRUB = commission.toInt()
+            commissionRUB = commission.toInt()
             commissionPenny = ((commission-commissionRUB)*100).toInt()
-        print("Комиссия $commissionRUB руб. $commissionPenny коп.")}
+            print("Комиссия $commissionRUB руб. $commissionPenny коп.")}
 
         false -> print("Транзакция не может быть совершена, так как превышен лимит")
     }
-
-
 }
 
 fun cardCommission(typeOfCard:String,amountOfTheTransfer:Int): Int {
-    val cards = arrayOf(MAESTRO,MASTERCARD,VISA,MIR)
-    var cardCommission = 0
 
-    when (typeOfCard) {
-        MASTERCARD -> {
-            cardCommission =
+    val cardCommission = when (typeOfCard) {
+        MAESTRO,MASTERCARD -> {
                 if (amountOfTheTransfer<maxTransferWithoutCommissionForMastercardAndMaestro) (amountOfTheTransfer*commissionForMASTERCARDandMAESTRO+20).toInt()
             else 0
         }
-        MAESTRO -> {
-            cardCommission =
-                if (amountOfTheTransfer<maxTransferWithoutCommissionForMastercardAndMaestro) (amountOfTheTransfer*commissionForMASTERCARDandMAESTRO+20).toInt()
-            else 0
-        }
-        VISA -> {
-            cardCommission =
+        else ->  {
                 if ((amountOfTheTransfer*commissionForVISAandMIR)<minCommissionForVISAandMIR) minCommissionForVISAandMIR
                 else (amountOfTheTransfer * commissionForVISAandMIR).toInt()
         }
-        MIR -> {
-            cardCommission =
-                if ((amountOfTheTransfer*commissionForVISAandMIR)<minCommissionForVISAandMIR) minCommissionForVISAandMIR
-                else (amountOfTheTransfer * commissionForMASTERCARDandMAESTRO).toInt()
-        }
+
     }
     return cardCommission
 }
 
 fun transferLimitCheck(typeOfCardOrAccount:String,amountOfPreviousTransfersThisMonth:Int,amountOfTheTransfer:Int):Boolean{
     val cards = arrayOf(MAESTRO,MASTERCARD,VISA,MIR)
-    var transferAccept = true
 
-     when(typeOfCardOrAccount){
+    val transferAccept = when(typeOfCardOrAccount){
          in cards -> {
-             if(((amountOfTheTransfer+amountOfPreviousTransfersThisMonth)<maxTransferInAMonth) and (amountOfTheTransfer<maxTransferInADay))  transferAccept
-             else transferAccept = false
+             ((amountOfTheTransfer+amountOfPreviousTransfersThisMonth)<maxTransferInAMonth) and (amountOfTheTransfer<maxTransferInADay)
          }
         else -> {
-            if (((amountOfTheTransfer+amountOfPreviousTransfersThisMonth)<maxTransferInADayForVKPAY) and (amountOfTheTransfer<maxTransferInAMonthForVKPAY)) transferAccept
-            else transferAccept = false
+            ((amountOfTheTransfer+amountOfPreviousTransfersThisMonth)<maxTransferInADayForVKPAY) and (amountOfTheTransfer<maxTransferInAMonthForVKPAY)
         }
     }
     return transferAccept

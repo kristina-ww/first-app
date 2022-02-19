@@ -7,64 +7,59 @@ const val thirdDAY = "yesterday"
 const val moreThenThreeDAYS = "long time ago"
 
 fun main(){
+    val howManySecAgoUserWasOnline = 66000
+    finalAnswer(howManySecAgoUserWasOnline)
 
+}
+
+fun finalAnswer(howManySecAgoUserWasOnline: Int){
     val timeInDigits:Array<String> = arrayOf(HOUR,DAY)
     val timeWithoutDigits:Array<String> = arrayOf(NOW,secondDAY,thirdDAY,moreThenThreeDAYS)
-
-    val howManySecAgoUserWasOnline = 660
     var finalTimeMinOrHours = ""
     var timeDigits = 0
     var timeWord = ""
 
-    when (val timeRule = onlineTimeRule(howManySecAgoUserWasOnline)) {
+    when (onlineTimeRule(howManySecAgoUserWasOnline)) {
         in timeInDigits -> {
-            timeDigits = ifAnswerWithDigits(timeRule,howManySecAgoUserWasOnline)
-            finalTimeMinOrHours = endingsForMinAndHours(timeRule,timeDigits)
+            timeDigits = ifAnswerWithDigits(onlineTimeRule(howManySecAgoUserWasOnline),howManySecAgoUserWasOnline)
+            finalTimeMinOrHours = endingsForMinAndHours(onlineTimeRule(howManySecAgoUserWasOnline),timeDigits)
             print("Был(а) в сети $timeDigits $finalTimeMinOrHours назад")
         }
         in timeWithoutDigits -> {
-            timeWord = ifAnswerWithoutDigits(timeRule)
+            timeWord = ifAnswerWithoutDigits(onlineTimeRule(howManySecAgoUserWasOnline))
             println("Был(а) в сети $timeWord ")
         }
     }
 }
 
 fun onlineTimeRule(howManySecAgoUserWasOnline:Int): String {
-    val untilMin:IntRange = (0..60) //sec
-    val fromMinToHour:IntRange = (61..3600)
-    val fromHourToADay:IntRange = (3601..86400)
-    val fromDayToTwoDays:IntRange = (86401..172800)
-    val fromTwoDaysToThreeDays:IntRange = (172801..259200)
-
-    val ruleForTime = when(howManySecAgoUserWasOnline){
-        in untilMin -> NOW
-        in fromMinToHour -> HOUR
-        in fromHourToADay -> DAY
-        in fromDayToTwoDays -> secondDAY
-        in fromTwoDaysToThreeDays -> thirdDAY
+    return when (howManySecAgoUserWasOnline) {
+        in (0..60) -> NOW
+        in (61..3600) -> HOUR
+        in (3601..86400) -> DAY
+        in (86401..172800) -> secondDAY
+        in (172801..259200) -> thirdDAY
         else -> moreThenThreeDAYS
     }
-    return ruleForTime
+
 }
 
 fun ifAnswerWithDigits(timeRule:String,howManySecAgoUserWasOnline:Int): Int{
-    var time = 0
-    when (timeRule) {
-        HOUR -> time = howManySecAgoUserWasOnline/60
-        DAY -> time = howManySecAgoUserWasOnline/3600
+
+    return when (timeRule) {
+        HOUR ->  howManySecAgoUserWasOnline/60
+        else ->  howManySecAgoUserWasOnline/3600
     }
-    return time
 }
 
 fun ifAnswerWithoutDigits(timeRule:String):String{
 
-    val phraseEnd = when (timeRule) {
+    return when (timeRule) {
         NOW -> "только что"
         secondDAY -> "сегодня"
         thirdDAY -> "вчера"
         else -> "давно"
     }
-    return phraseEnd
 }
 
 
