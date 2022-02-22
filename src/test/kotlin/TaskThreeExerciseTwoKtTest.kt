@@ -15,7 +15,7 @@ class TaskThreeExerciseTwoKtTest {
         assert(actualResult==finalAnswer_without_overlimit_expected_result())
 
     }
-    fun finalAnswer_without_overlimit_expected_result(){
+    private fun finalAnswer_without_overlimit_expected_result(){
         print("Комиссия 6698 руб. 0 коп.")
     }
     @Test
@@ -28,9 +28,10 @@ class TaskThreeExerciseTwoKtTest {
 
         assert(actualResult==finalAnswer_with_overlimit_expected_result())
     }
-    fun finalAnswer_with_overlimit_expected_result(){
+    private fun finalAnswer_with_overlimit_expected_result(){
         print("Транзакция не может быть совершена, так как превышен лимит")
     }
+    fff
 
     @Test
     fun cardCommission_minimum_for_visa_and_mir(){
