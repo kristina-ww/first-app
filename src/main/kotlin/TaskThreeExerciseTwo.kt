@@ -14,8 +14,8 @@ const val minCommissionForVISAandMIR = 35 //RUB
 
 fun main(){
     val typeOfCardOrAccount = MASTERCARD
-    val amountOfPreviousTransfersThisMonth = 111
-    val amountOfTheTransfer = 11131
+    val amountOfPreviousTransfersThisMonth = 1112
+    val amountOfTheTransfer = 111313
 
     finalAnswer(amountOfPreviousTransfersThisMonth, amountOfTheTransfer, typeOfCardOrAccount)
 }
@@ -39,8 +39,8 @@ fun cardCommission(typeOfCard:String,amountOfTheTransfer:Int): Int {
 
     val cardCommission = when (typeOfCard) {
         MAESTRO,MASTERCARD -> {
-                if (amountOfTheTransfer<maxTransferWithoutCommissionForMastercardAndMaestro) (amountOfTheTransfer*commissionForMASTERCARDandMAESTRO+20).toInt()
-            else 0
+                if (amountOfTheTransfer<maxTransferWithoutCommissionForMastercardAndMaestro) 0
+            else (amountOfTheTransfer*commissionForMASTERCARDandMAESTRO+20).toInt()
         }
         else ->  {
                 if ((amountOfTheTransfer*commissionForVISAandMIR)<minCommissionForVISAandMIR) minCommissionForVISAandMIR

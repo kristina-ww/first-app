@@ -41,11 +41,9 @@ fun onlineTimeRule(howManySecAgoUserWasOnline:Int): String {
         in (172801..259200) -> thirdDAY
         else -> moreThenThreeDAYS
     }
-
 }
 
 fun ifAnswerWithDigits(timeRule:String,howManySecAgoUserWasOnline:Int): Int{
-
     return when (timeRule) {
         HOUR ->  howManySecAgoUserWasOnline/60
         else ->  howManySecAgoUserWasOnline/3600
