@@ -31,7 +31,6 @@ class TaskThreeExerciseTwoKtTest {
     private fun finalAnswer_with_overlimit_expected_result(){
         print("Транзакция не может быть совершена, так как превышен лимит")
     }
-    fff
 
     @Test
     fun cardCommission_minimum_for_visa_and_mir(){
